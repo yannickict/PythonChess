@@ -1,5 +1,10 @@
+import os
 import wx
 from Board.board import Board
+
+# Get the directory path of the script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+images_dir = os.path.join(script_dir, '..', 'Images')
 
 class ChessBoard(wx.Frame):
     def __init__(self, parent, board, size=(400, 400)):
@@ -28,18 +33,11 @@ class ChessBoard(wx.Frame):
 
                 for piece in self.board.board:
                     if piece.location == (j, i):
-                        if piece.name == 'King':
-                            square.SetBackgroundColour(wx.Colour(255, 0, 0))
-                        elif piece.name == 'Queen':
-                            square.SetBackgroundColour(wx.Colour(0, 255, 0))
-                        elif piece.name == 'Rook':
-                            square.SetBackgroundColour(wx.Colour(255, 255, 0))
-                        elif piece.name == 'Bishop':
-                            square.SetBackgroundColour(wx.Colour(0, 0, 255))
-                        elif piece.name == 'Knight':
-                            square.SetBackgroundColour(wx.Colour(255, 0, 255))
-                        elif piece.name == 'Pawn':
-                            square.SetBackgroundColour(wx.Colour(0, 0, 0))
+                        image_path = os.path.join(images_dir, f"{piece.name}{'White' if piece.white else 'Black'}.png")
+                        if os.path.exists(image_path):
+                            piece_image = wx.Image(image_path, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+                            # Create wx.StaticBitmap and add it to the square
+                            bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
 
         panel.SetSizer(grid)
         self.Centre()
