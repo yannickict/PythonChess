@@ -7,13 +7,23 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 images_dir = os.path.join(script_dir, '..', 'Images')
 
 class ChessBoard(wx.Frame):
-    def __init__(self, parent, board, size=(400, 400)):
+    def __init__(self, parent, board):
+        size=(520, 520)
         title = 'Chess'
 
         super(ChessBoard, self).__init__(parent, title=title, size=size)
         self.board = board
 
         self.initUI()
+
+    def onPieceClick(self, piece):
+        pass
+    def onEnterSquare(self, event):
+        self.SetCursor(wx.Cursor(wx.CURSOR_HAND))
+
+
+    def onLeaveSquare(self, event):
+        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
 
     def initUI(self):
         panel = wx.Panel(self)
@@ -38,6 +48,11 @@ class ChessBoard(wx.Frame):
                             piece_image = wx.Image(image_path, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
                             # Create wx.StaticBitmap and add it to the square
                             bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
+
+                            bitmap.Bind(wx.EVT_LEFT_DOWN, self.onPieceClick(piece))
+                            bitmap.Bind(wx.EVT_ENTER_WINDOW, self.onEnterSquare)
+                            bitmap.Bind(wx.EVT_LEAVE_WINDOW, self.onLeaveSquare)
+
 
         panel.SetSizer(grid)
         self.Centre()

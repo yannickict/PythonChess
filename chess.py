@@ -5,6 +5,6 @@ import wx
 
 board = Board()
 app = wx.App()
-frame = wx.Frame(None, size=(400, 400))
+frame = wx.Frame(None)
 ChessBoard(frame, board)
 app.MainLoop()
