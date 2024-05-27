@@ -8,7 +8,7 @@ images_dir = os.path.join(script_dir, '..', 'Images')
 
 class ChessBoard(wx.Frame):
     def __init__(self, parent, board):
-        size=(520, 520)
+        size=(560, 560)
         title = 'Chess'
 
         super(ChessBoard, self).__init__(parent, title=title, size=size)
@@ -17,13 +17,8 @@ class ChessBoard(wx.Frame):
         self.initUI()
 
     def onPieceClick(self, piece):
+        print (f"Clicked on {piece.name} at {piece.location}")
         pass
-    def onEnterSquare(self, event):
-        self.SetCursor(wx.Cursor(wx.CURSOR_HAND))
-
-
-    def onLeaveSquare(self, event):
-        self.SetCursor(wx.Cursor(wx.CURSOR_ARROW))
 
     def initUI(self):
         panel = wx.Panel(self)
@@ -50,8 +45,6 @@ class ChessBoard(wx.Frame):
                             bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
 
                             bitmap.Bind(wx.EVT_LEFT_DOWN, self.onPieceClick(piece))
-                            bitmap.Bind(wx.EVT_ENTER_WINDOW, self.onEnterSquare)
-                            bitmap.Bind(wx.EVT_LEAVE_WINDOW, self.onLeaveSquare)
 
 
         panel.SetSizer(grid)
@@ -65,7 +58,7 @@ if __name__ == '__main__':
     board = Board()
     
     # Create ChessBoard instance with custom size and the board object
-    frame = ChessBoard(None, board, size=(500, 500))
+    frame = ChessBoard(None, board, size=(550, 550))
     
     frame.Show()
     app.MainLoop()
