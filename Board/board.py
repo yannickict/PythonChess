@@ -12,7 +12,7 @@ class Board:
         # -----Add all pieces-----
 
         # Add pawns
-        for column in range(1, 9):
+        for column in range(1, 2):
             pawnwhite = Pawn((column, 7), True, self.board)
             self.board.append(pawnwhite)
 

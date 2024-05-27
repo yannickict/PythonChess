@@ -15,51 +15,72 @@ class Rook(Piece):
         i = row
         while i < 8:
             i += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
-                    possibleLocations.append((column, i))
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((column, i))
+            if addPiece:
+                possibleLocations.append((column, i))
+            if not repeat:
+                break
                 
         i = row
         while i > 1:
             i -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
-                    possibleLocations.append((column, i))
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((column, i))
+            if addPiece:
+                possibleLocations.append((column, i))
+            if not repeat:
+                break
 
         # Add all possible moves in the same row
         # Check all pieces in the same row
         i = column
         while i < 8:
             i += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
-                    possibleLocations.append((i, row))
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((i, row))
+            if addPiece:
+                possibleLocations.append((i, row))
+            if not repeat:
+                break
+
         i = column
         while i > 1:
             i -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
-                    possibleLocations.append((i, row))
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((i, row))
+            if addPiece:
+                possibleLocations.append((i, row))
+            if not repeat:
+                break
 
         return possibleLocations
     
