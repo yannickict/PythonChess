@@ -1,4 +1,3 @@
-# Assuming piece.py contains the Piece class
 from Pieces.piece import Piece
 
 class Pawn(Piece):
@@ -10,31 +9,71 @@ class Pawn(Piece):
         column, row = self.location
         possibleLocations = []
 
-        # Add all possible moves in the same column
-        if self.board[row + 1][column] == 0:
-            possibleLocations.append((column, row + 1))
+        if self.white:
+            # Check one square ahead
+            if row - 1 > 0:
+                has_piece = False
+                for piece in self.board:
+                    if piece.location == (column, row - 1):
+                        has_piece = True
+                        break
+                if not has_piece:
+                    possibleLocations.append((column, row - 1))
 
-        if row == 2:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column, row + 2):
-                    empty = False
-            if empty:
-                possibleLocations.append((column, row + 2))
+            # Check two squares ahead from starting position
+            if row == 7:
+                empty = True
+                for piece in self.board:
+                    if piece.location == (column, row - 2) or piece.location == (column, row - 1):
+                        empty = False
+                        break
+                if empty:
+                    possibleLocations.append((column, row - 2))
 
-        # Add all possible moves with kill
-        for piece in self.board:
-            if piece.location == (column - 1, row + 1) and piece.white != self.white:
-                possibleLocations.append((column - 1, row + 1))
-            if piece.location == (column + 1, row + 1) and piece.white != self.white:
-                possibleLocations.append((column + 1, row + 1))
+            # Check for kill moves
+            for offset in [-1, 1]:
+                target_row = row - 1
+                target_column = column + offset
+                for piece in self.board:
+                    if piece.location == (target_column, target_row) and piece.white != self.white:
+                        possibleLocations.append((target_column, target_row))
+                        break
+        if not self.white:
+            # Check one square ahead
+            if row + 1 <= 8:
+                has_piece = False
+                for piece in self.board:
+                    if piece.location == (column, row + 1):
+                        has_piece = True
+                        break
+                if not has_piece:
+                    possibleLocations.append((column, row + 1))
+
+            # Check two squares ahead from starting position
+            if row == 2:
+                empty = True
+                for piece in self.board:
+                    if piece.location == (column, row + 2) or piece.location == (column, row + 1):
+                        empty = False
+                        break
+                if empty:
+                    possibleLocations.append((column, row + 2))
+
+            # Check for kill moves
+            for offset in [-1, 1]:
+                target_row = row + 1
+                target_column = column + offset
+                for piece in self.board:
+                    if piece.location == (target_column, target_row) and piece.white != self.white:
+                        possibleLocations.append((target_column, target_row))
+                        break
 
         return possibleLocations
-    
+
     def move(self, location):
         possibleLocations = self.showMoves()
 
         if location in possibleLocations:
             super().move(location)
         else:
-            print(f"Invalid move for Rook to {location}")
+            print(f"Invalid move for Pawn to {location}")

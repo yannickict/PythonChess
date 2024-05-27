@@ -10,37 +10,61 @@ class Knight(Piece):
 
         # Add all possible moves
         if column + 2 < 9 and row + 1 < 9:
+            empty = True
             for piece in self.board:
-                if piece.location == (column + 2, row + 1) and piece.white != self.white:
-                    possibleLocations.append((column + 2, row + 1))
+                if piece.location == (column + 2, row + 1) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column + 2, row + 1))
         if column + 2 < 9 and row - 1 > 0:
+            empty = True
             for piece in self.board:
-                if piece.location == (column + 2, row - 1) and piece.white != self.white:
-                    possibleLocations.append((column + 2, row - 1))
+                if piece.location == (column + 2, row - 1) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column + 2, row - 1))
         if column - 2 > 0 and row + 1 < 9:
+            empty = True
             for piece in self.board:
-                if piece.location == (column - 2, row + 1) and piece.white != self.white:
-                    possibleLocations.append((column - 2, row + 1))
+                if piece.location == (column - 2, row + 1) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column - 2, row + 1))
         if column - 2 > 0 and row - 1 > 0:
+            empty = True
             for piece in self.board:
-                if piece.location == (column - 2, row - 1) and piece.white != self.white:
-                    possibleLocations.append((column - 2, row - 1))
+                if piece.location == (column - 2, row - 1) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column - 2, row - 1))
         if column + 1 < 9 and row + 2 < 9:
+            empty = True
             for piece in self.board:
-                if piece.location == (column + 1, row + 2) and piece.white != self.white:
-                    possibleLocations.append((column + 1, row + 2))
+                if piece.location == (column + 1, row + 2) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column + 1, row + 2))
         if column + 1 < 9 and row - 2 > 0:
+            empty = True
             for piece in self.board:
-                if piece.location == (column + 1, row - 2) and piece.white != self.white:
-                    possibleLocations.append((column + 1, row - 2))
+                if piece.location == (column + 1, row - 2) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column + 1, row - 2))
         if column - 1 > 0 and row + 2 < 9:
+            empty = True
             for piece in self.board:
-                if piece.location == (column - 1, row + 2) and piece.white != self.white:
-                    possibleLocations.append((column - 1, row + 2))
+                if piece.location == (column - 1, row + 2) and piece.white == self.white:
+                    empty = False
+            if empty:
+                possibleLocations.append((column - 1, row + 2))
         if column - 1 > 0 and row - 2 > 0:
+            empty = True
             for piece in self.board:
                 if piece.location == (column - 1, row - 2) and piece.white != self.white:
-                    possibleLocations.append((column - 1, row - 2))
+                    empty = False
+            if empty:
+                possibleLocations.append((column - 1, row - 2))
 
         return possibleLocations
     def move(self, location):

@@ -17,8 +17,8 @@ class ChessBoard(wx.Frame):
         self.initUI()
 
     def onPieceClick(self, piece):
-        print (f"Clicked on {piece.name} at {piece.location}")
-        pass
+        moves = piece.showMoves()
+        print(moves)
 
     def initUI(self):
         panel = wx.Panel(self)
@@ -31,12 +31,12 @@ class ChessBoard(wx.Frame):
             for j in range(1, 9):
                 square = wx.Panel(panel)
                 if (i + j) % 2 == 0:
-                    square.SetBackgroundColour(wx.Colour(240, 217, 181))  # Light color for white squares
+                    square.SetBackgroundColour(wx.Colour(240, 217, 181))
                 else:
-                    square.SetBackgroundColour(wx.Colour(181, 136, 99))   # Dark color for black squares
+                    square.SetBackgroundColour(wx.Colour(181, 136, 99))
                 grid.Add(square, 0, wx.EXPAND)
 
-                for piece in self.board.board:
+                for piece in self.board:
                     if piece.location == (j, i):
                         image_path = os.path.join(images_dir, f"{piece.name}{'White' if piece.white else 'Black'}.png")
                         if os.path.exists(image_path):
@@ -44,8 +44,7 @@ class ChessBoard(wx.Frame):
                             # Create wx.StaticBitmap and add it to the square
                             bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
 
-                            bitmap.Bind(wx.EVT_LEFT_DOWN, self.onPieceClick(piece))
-
+                            bitmap.Bind(wx.EVT_LEFT_DOWN, lambda event, p=piece: self.onPieceClick(p))
 
         panel.SetSizer(grid)
         self.Centre()
