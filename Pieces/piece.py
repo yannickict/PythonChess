@@ -1,9 +1,11 @@
 class Piece:
-    def __init__(self, location, white, board):
+    def __init__(self, location, white, board, boardObject):
         self.location = location
         self.alive = True
         self.white = white
+        self.boardObject = boardObject
         self.board = board
+        self.square = None
 
     def die(self):
         self.board.remove_piece(self)

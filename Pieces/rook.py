@@ -2,8 +2,8 @@
 from Pieces.piece import Piece
 
 class Rook(Piece):
-    def __init__(self, location, white, board):
-        super().__init__(location, white, board)
+    def __init__(self, location, white, board, boardObject):
+        super().__init__(location, white, board , boardObject)
         self.name = 'Rook'
 
     def showMoves(self):
@@ -19,6 +19,7 @@ class Rook(Piece):
             repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
+                    repeat = False
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
                     addPiece = False
@@ -36,6 +37,7 @@ class Rook(Piece):
             repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
+                    repeat = False
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
                     addPiece = False
@@ -55,6 +57,7 @@ class Rook(Piece):
             repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
+                    repeat = False
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
                     addPiece = False
@@ -72,6 +75,7 @@ class Rook(Piece):
             repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
+                    repeat = False
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
                     addPiece = False

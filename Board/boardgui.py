@@ -20,17 +20,24 @@ class ChessBoard(wx.Frame):
 
     def onPieceClick(self, piece):
         self.selected_piece = piece
+        if self.selected_piece.square.selectedBy:
+            p = self.selected_piece.square.selectedBy
+            self.selected_piece.die()
+            p.move(piece.location)
+            self.refreshBoard()
+            self.resetHighlights()
+            self.selected_piece = None
         # Reset the background color of previously highlighted squares
         self.resetHighlights()
         moves = piece.showMoves()
         print(moves)
-        self.highlightMoves(moves)
+        self.highlightMoves(moves, piece)
 
     def onSquareClick(self, event):
         if self.selected_piece:
             square = event.GetEventObject()
             x, y = square.position
-            if square.selected:
+            if square.selectedBy:
                 self.selected_piece.move((x, 7 - y))
                 self.refreshBoard()
                 self.resetHighlights()
@@ -39,15 +46,15 @@ class ChessBoard(wx.Frame):
     def resetHighlights(self):
         for square in self.highlighted_squares:
             square.SetBackgroundColour(square.original_color)
-            square.selected = False
+            square.selectedBy = None
         self.highlighted_squares = []
 
-    def highlightMoves(self, moves):
+    def highlightMoves(self, moves, piece):
         for move in moves:
             x, y = move
             square = self.squares[7 - y][x]
             square.SetBackgroundColour(wx.Colour(255, 0, 0))  # Highlight color
-            square.selected = True
+            square.selectedBy = piece
             self.highlighted_squares.append(square)
         self.Refresh()
 
@@ -62,6 +69,7 @@ class ChessBoard(wx.Frame):
             if piece.location:
                 x, y = piece.location
                 square = self.squares[7 - y][x]
+                piece.square = square
                 image_path = os.path.join(images_dir, f"{piece.name}{'White' if piece.white else 'Black'}.png")
                 if os.path.exists(image_path):
                     piece_image = wx.Image(image_path, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
@@ -84,7 +92,7 @@ class ChessBoard(wx.Frame):
                 color = wx.Colour(240, 217, 181) if (y + x) % 2 == 0 else wx.Colour(181, 136, 99)
                 square.SetBackgroundColour(color)
                 square.original_color = color
-                square.selected = False
+                square.selectedBy = None
                 square.position = (x, y)  # Store position for easy access
                 square.Bind(wx.EVT_LEFT_DOWN, self.onSquareClick)
                 grid.Add(square, 0, wx.EXPAND)
@@ -98,15 +106,3 @@ class ChessBoard(wx.Frame):
         panel.SetSizer(grid)
         self.Centre()
         self.Show()
-
-if __name__ == '__main__':
-    app = wx.App()
-
-    # Example: Create a board instance (assuming you have a Board class)
-    board = Board()
-    
-    # Create ChessBoard instance with custom size and the board object
-    frame = ChessBoard(None, board)
-    
-    frame.Show()
-    app.MainLoop()

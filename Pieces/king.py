@@ -1,7 +1,7 @@
 from Pieces.piece import Piece
 class King(Piece):
-    def __init__(self, location, board, white):
-        super().__init__(location, board, white)
+    def __init__(self, location, board, white, boardObject):
+        super().__init__(location, board, white, boardObject)
         self.name = "King"
 
     def showMoves(self):

@@ -1,8 +1,8 @@
 from Pieces.piece import Piece
 
 class Pawn(Piece):
-    def __init__(self, location, white, board):
-        super().__init__(location, white, board)
+    def __init__(self, location, white, board, boardObject):
+        super().__init__(location, white, board , boardObject)
         self.name = "Pawn"
 
     def showMoves(self):

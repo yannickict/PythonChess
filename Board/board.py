@@ -13,55 +13,55 @@ class Board:
 
         # Add pawns
         for column in range(0, 1):
-            pawnwhite = Pawn((column, 1), True, self.board)
+            pawnwhite = Pawn((column, 1), True, self.board, self)
             self.board.append(pawnwhite)
 
-            pawnblack = Pawn((column, 6), False, self.board)
+            pawnblack = Pawn((column, 6), False, self.board, self)
             self.board.append(pawnblack)
 
         # Add rooks
-        rookwhiteleft = Rook((0, 0), True, self.board)
+        rookwhiteleft = Rook((0, 0), True, self.board, self)
         self.board.append(rookwhiteleft)
-        rookwhiteright = Rook((7, 0), True, self.board)
+        rookwhiteright = Rook((7, 0), True, self.board, self)
         self.board.append(rookwhiteright)
 
-        rookblackleft = Rook((0, 7), False, self.board)
+        rookblackleft = Rook((0, 7), False, self.board, self)
         self.board.append(rookblackleft)
-        rookblackright = Rook((7, 7), False, self.board)
+        rookblackright = Rook((7, 7), False, self.board, self)
         self.board.append(rookblackright)
 
         # Add Bishops
-        bishopwhiteleft = Bishop((2, 0), True, self.board)
+        bishopwhiteleft = Bishop((2, 0), True, self.board, self)
         self.board.append(bishopwhiteleft)
-        bishopwhiteright = Bishop((5, 0), True, self.board)
+        bishopwhiteright = Bishop((5, 0), True, self.board, self)
         self.board.append(bishopwhiteright)
 
-        bishopblackleft = Bishop((2, 7), False, self.board)
+        bishopblackleft = Bishop((2, 7), False, self.board, self)
         self.board.append(bishopblackleft)
-        bishopblackright = Bishop((5, 7), False, self.board)
+        bishopblackright = Bishop((5, 7), False, self.board, self)
         self.board.append(bishopblackright)
 
         # Add Knights
-        knightwhiteleft = Knight((1, 0), True, self.board)
+        knightwhiteleft = Knight((1, 0), True, self.board, self)
         self.board.append(knightwhiteleft)
-        knightwhiteright = Knight((6, 0), True, self.board)
+        knightwhiteright = Knight((6, 0), True, self.board, self)
         self.board.append(knightwhiteright)
 
-        knightblackleft = Knight((1, 7), False, self.board)
+        knightblackleft = Knight((1, 7), False, self.board, self)
         self.board.append(knightblackleft)
-        knightblackright = Knight((6, 7), False, self.board)
+        knightblackright = Knight((6, 7), False, self.board, self)
         self.board.append(knightblackright)
 
         # Add Queens
-        queenwhite = Queen((3, 0), True, self.board)
+        queenwhite = Queen((3, 0), True, self.board, self)
         self.board.append(queenwhite)
-        queenblack = Queen((4, 7), False, self.board)
+        queenblack = Queen((4, 7), False, self.board, self)
         self.board.append(queenblack)
 
         # Add Kings
-        kingwhite = King((4, 0), True, self.board)
+        kingwhite = King((4, 0), True, self.board, self)
         self.board.append(kingwhite)
-        kingblack = King((3, 7), False, self.board)
+        kingblack = King((3, 7), False, self.board, self)
         self.board.append(kingblack)
 
 
@@ -70,4 +70,4 @@ class Board:
         pass
 
     def remove_piece(self, piece):
-        pass
+        self.board.remove(piece)
