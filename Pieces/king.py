@@ -7,16 +7,16 @@ class King(Piece):
     def showMoves(self):
         column, row = self.location
         possibleLocations = []
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if i == 0 and j == 0:
+        for x in range(-1, 2):
+            for y in range(-1, 2):
+                if x == 0 and y == 0:
                     continue
-                if column + i < 1 or column + i > 8 or row + j < 1 or row + j > 8:
+                if column + x < 0 or column + x > 7 or row + y < 0 or row + y > 7:
                     continue
                 possible = True
                 for piece in self.board:
-                    if piece.location == (column + i, row + j) and piece.white == self.white:
+                    if piece.location == (column + x, row + y) and piece.white == self.white:
                         possible = False
                 if possible:
-                    possibleLocations.append((column + i, row + j))
+                    possibleLocations.append((column + x, row + y))
         return possibleLocations

@@ -15,7 +15,7 @@ class Bishop(Piece):
         j = column
         addPiece = True
         repeat = True
-        while i < 8 and j < 8:
+        while i < 7 and j < 7:
             i += 1
             j += 1
             for piece in self.board:
@@ -31,7 +31,7 @@ class Bishop(Piece):
                 break
         i = row
         j = column
-        while i > 1 and j < 8:
+        while i > 0 and j < 7:
             i -= 1
             j += 1
             addPiece = True
@@ -50,7 +50,7 @@ class Bishop(Piece):
                     
         i = row
         j = column
-        while i < 8 and j > 1:
+        while i < 7 and j > 0:
             i += 1
             j -= 1
             addPiece = True
@@ -70,7 +70,7 @@ class Bishop(Piece):
             
         i = row
         j = column
-        while i > 1 and j > 1:
+        while i > 0 and j > 0:
             i -= 1
             j -= 1
             addPiece = True

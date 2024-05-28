@@ -13,7 +13,7 @@ class Rook(Piece):
         # Add all possible moves in the same column
         # Check all pieces in the same column
         i = row
-        while i < 8:
+        while i < 7:
             i += 1
             addPiece = True
             repeat = True
@@ -30,7 +30,7 @@ class Rook(Piece):
                 break
                 
         i = row
-        while i > 1:
+        while i > 0:
             i -= 1
             addPiece = True
             repeat = True
@@ -49,7 +49,7 @@ class Rook(Piece):
         # Add all possible moves in the same row
         # Check all pieces in the same row
         i = column
-        while i < 8:
+        while i < 7:
             i += 1
             addPiece = True
             repeat = True
@@ -66,7 +66,7 @@ class Rook(Piece):
                 break
 
         i = column
-        while i > 1:
+        while i > 0:
             i -= 1
             addPiece = True
             repeat = True

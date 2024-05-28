@@ -8,17 +8,34 @@ images_dir = os.path.join(script_dir, '..', 'Images')
 
 class ChessBoard(wx.Frame):
     def __init__(self, parent, board):
-        size=(560, 560)
+        size = (560, 560)
         title = 'Chess'
 
         super(ChessBoard, self).__init__(parent, title=title, size=size)
         self.board = board
+        self.highlighted_squares = []
 
         self.initUI()
 
     def onPieceClick(self, piece):
+        # Reset the background color of previously highlighted squares
+        self.resetHighlights()
         moves = piece.showMoves()
         print(moves)
+        self.highlightMoves(moves)
+
+    def resetHighlights(self):
+        for square in self.highlighted_squares:
+            square.SetBackgroundColour(square.original_color)
+        self.highlighted_squares = []
+
+    def highlightMoves(self, moves):
+        for move in moves:
+            x, y = move
+            square = self.squares[7 - y][x]
+            square.SetBackgroundColour(wx.Colour(255, 0, 0))  # Highlight color
+            self.highlighted_squares.append(square)
+        self.Refresh()
 
     def initUI(self):
         panel = wx.Panel(self)
@@ -27,24 +44,28 @@ class ChessBoard(wx.Frame):
         grid = wx.GridSizer(8, 8, 0, 0)
 
         # Create 64 squares for the chessboard
-        for i in range(1, 9):
-            for j in range(1, 9):
+        self.squares = []
+        for y in range(8):
+            row = []
+            for x in range(8):
                 square = wx.Panel(panel)
-                if (i + j) % 2 == 0:
-                    square.SetBackgroundColour(wx.Colour(240, 217, 181))
-                else:
-                    square.SetBackgroundColour(wx.Colour(181, 136, 99))
+                color = wx.Colour(240, 217, 181) if (y + x) % 2 == 0 else wx.Colour(181, 136, 99)
+                square.SetBackgroundColour(color)
+                square.original_color = color
                 grid.Add(square, 0, wx.EXPAND)
 
-                for piece in self.board:
-                    if piece.location == (j, i):
-                        image_path = os.path.join(images_dir, f"{piece.name}{'White' if piece.white else 'Black'}.png")
-                        if os.path.exists(image_path):
-                            piece_image = wx.Image(image_path, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-                            # Create wx.StaticBitmap and add it to the square
-                            bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
+                row.append(square)
+            self.squares.append(row)
 
-                            bitmap.Bind(wx.EVT_LEFT_DOWN, lambda event, p=piece: self.onPieceClick(p))
+        for piece in self.board:
+            if piece.location:
+                x, y = piece.location
+                square = self.squares[7 - y][x]  # Adjusted for 0-based index and grid layout
+                image_path = os.path.join(images_dir, f"{piece.name}{'White' if piece.white else 'Black'}.png")
+                if os.path.exists(image_path):
+                    piece_image = wx.Image(image_path, wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+                    bitmap = wx.StaticBitmap(square, wx.ID_ANY, piece_image)
+                    bitmap.Bind(wx.EVT_LEFT_DOWN, lambda event, p=piece: self.onPieceClick(p))
 
         panel.SetSizer(grid)
         self.Centre()
@@ -57,7 +78,7 @@ if __name__ == '__main__':
     board = Board()
     
     # Create ChessBoard instance with custom size and the board object
-    frame = ChessBoard(None, board, size=(550, 550))
+    frame = ChessBoard(None, board)
     
     frame.Show()
     app.MainLoop()
