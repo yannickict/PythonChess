@@ -9,109 +9,152 @@ class Queen(Piece):
     def showMoves(self):
         column, row = self.location
         possibleLocations = []
-
-        # Add all possible moves in the same column
         i = row
         while i < 8:
             i += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
-                    possibleLocations.append((column, i))
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((column, i))
+            if addPiece:
+                possibleLocations.append((column, i))
+            if not repeat:
+                break
                 
         i = row
         while i > 1:
             i -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (column, i) and piece.white != self.white:
-                    possibleLocations.append((column, i))
                     break
                 elif piece.location == (column, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((column, i))
+            if addPiece:
+                possibleLocations.append((column, i))
+            if not repeat:
+                break
 
         # Add all possible moves in the same row
+        # Check all pieces in the same row
         i = column
         while i < 8:
             i += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
-                    possibleLocations.append((i, row))
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((i, row))
+            if addPiece:
+                possibleLocations.append((i, row))
+            if not repeat:
+                break
+
         i = column
         while i > 1:
             i -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (i, row) and piece.white != self.white:
-                    possibleLocations.append((i, row))
                     break
                 elif piece.location == (i, row) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((i, row))
-
-        # Add all possible moves in the same diagonal
+            if addPiece:
+                possibleLocations.append((i, row))
+            if not repeat:
+                break
+            # Add all possible moves in the same diagonal
+        # Check all pieces in the same diagonal
         i = row
         j = column
         while i < 8 and j < 8:
             i += 1
             j += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (j, i) and piece.white != self.white:
-                    possibleLocations.append((j, i))
                     break
                 elif piece.location == (j, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((j, i))
+            if addPiece:
+                possibleLocations.append((j, i))
+            if not repeat:
+                break
         i = row
         j = column
         while i > 1 and j < 8:
             i -= 1
             j += 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (j, i) and piece.white != self.white:
-                    possibleLocations.append((j, i))
                     break
                 elif piece.location == (j, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((j, i))
+            if addPiece:
+                possibleLocations.append((j, i))
+            if not repeat:
+                break
+                    
         i = row
         j = column
         while i < 8 and j > 1:
             i += 1
             j -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (j, i) and piece.white != self.white:
-                    possibleLocations.append((j, i))
                     break
                 elif piece.location == (j, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((j, i))
+            if addPiece:
+                possibleLocations.append((j, i))
+            if not repeat:
+                break
+
+            
         i = row
         j = column
         while i > 1 and j > 1:
             i -= 1
             j -= 1
+            addPiece = True
+            repeat = True
             for piece in self.board:
                 if piece.location == (j, i) and piece.white != self.white:
-                    possibleLocations.append((j, i))
                     break
                 elif piece.location == (j, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((j, i))
+            if addPiece:
+                possibleLocations.append((j, i))
+            if not repeat:
+                break
         
 
         return possibleLocations

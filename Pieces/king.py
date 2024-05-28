@@ -13,11 +13,10 @@ class King(Piece):
                     continue
                 if column + i < 1 or column + i > 8 or row + j < 1 or row + j > 8:
                     continue
+                possible = True
                 for piece in self.board:
-                    if piece.location == (column + i, row + j) and piece.white != self.white:
-                        possibleLocations.append((column + i, row + j))
-                        break
-                    elif piece.location == (column + i, row + j) and piece.white == self.white:
-                        break
-                    else:
-                        possibleLocations.append((column + i, row + j))
+                    if piece.location == (column + i, row + j) and piece.white == self.white:
+                        possible = False
+                if possible:
+                    possibleLocations.append((column + i, row + j))
+        return possibleLocations

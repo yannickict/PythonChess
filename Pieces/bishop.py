@@ -13,17 +13,22 @@ class Bishop(Piece):
         # Check all pieces in the same diagonal
         i = row
         j = column
+        addPiece = True
+        repeat = True
         while i < 8 and j < 8:
             i += 1
             j += 1
             for piece in self.board:
-                if piece.location == (j, i):
-                    possibleLocations.append((j, i))
+                if piece.location == (j, i) and piece.white != self.white:
                     break
                 elif piece.location == (j, i) and piece.white == self.white:
+                    addPiece = False
+                    repeat = False
                     break
-                else:
-                    possibleLocations.append((j, i))
+            if addPiece:
+                possibleLocations.append((j, i))
+            if not repeat:
+                break
         i = row
         j = column
         while i > 1 and j < 8:
