@@ -1,4 +1,5 @@
 from Pieces.piece import Piece
+
 class Knight(Piece):
     def __init__(self, location, white, board, boardObject):
         super().__init__(location, white, board, boardObject)
@@ -8,65 +9,29 @@ class Knight(Piece):
         column, row = self.location
         possibleLocations = []
 
-        # Add all possible moves
-        if column + 2 < 8 and row + 1 < 8:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column + 2, row + 1) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column + 2, row + 1))
-        if column + 2 < 8 and row - 1 > -1:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column + 2, row - 1) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column + 2, row - 1))
-        if column - 2 > -1 and row + 1 < 8:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column - 2, row + 1) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column - 2, row + 1))
-        if column - 2 > -1 and row - 1 > -1:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column - 2, row - 1) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column - 2, row - 1))
-        if column + 1 < 8 and row + 2 < 8:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column + 1, row + 2) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column + 1, row + 2))
-        if column + 1 < 8 and row - 2 > -1:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column + 1, row - 2) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column + 1, row - 2))
-        if column - 1 > -1 and row + 2 < 8:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column - 1, row + 2) and piece.white == self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column - 1, row + 2))
-        if column - 1 > -1 and row - 2 > -1:
-            empty = True
-            for piece in self.board:
-                if piece.location == (column - 1, row - 2) and piece.white != self.white:
-                    empty = False
-            if empty:
-                possibleLocations.append((column - 1, row - 2))
+        # Define all possible knight moves
+        move_offsets = [
+            (2, 1), (2, -1), (-2, 1), (-2, -1),
+            (1, 2), (1, -2), (-1, 2), (-1, -2)
+        ]
+
+        for offset in move_offsets:
+            new_column = column + offset[0]
+            new_row = row + offset[1]
+
+            if 0 <= new_column < 8 and 0 <= new_row < 8:
+                move_valid = True
+                for piece in self.board:
+                    if piece.location == (new_column, new_row):
+                        if piece.white == self.white:
+                            move_valid = False  # Block move if friendly piece is there
+                        break
+
+                if move_valid:
+                    possibleLocations.append((new_column, new_row))
 
         return possibleLocations
+
     def move(self, location):
         possibleLocations = self.showMoves()
 

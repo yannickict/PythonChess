@@ -8,11 +8,12 @@ from Pieces.king import King
 class Board:
     def __init__(self):
         self.board = []
+        self.whiteToMove = True 
 
         # -----Add all pieces-----
 
         # Add pawns
-        for column in range(0, 1):
+        for column in range(0, 8):
             pawnwhite = Pawn((column, 1), True, self.board, self)
             self.board.append(pawnwhite)
 

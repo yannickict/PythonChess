@@ -19,18 +19,21 @@ class ChessBoard(wx.Frame):
         self.initUI()
 
     def onPieceClick(self, piece):
-        self.selected_piece = piece
-        if self.selected_piece.square.selectedBy:
-            p = self.selected_piece.square.selectedBy
-            self.selected_piece.die()
+        if piece.square.selectedBy:
+            p = piece.square.selectedBy
             p.move(piece.location)
+            self.selected_piece = None
+            self.board.whiteToMove = not self.board.whiteToMove
             self.refreshBoard()
             self.resetHighlights()
             self.selected_piece = None
+            return
         # Reset the background color of previously highlighted squares
+        if self.board.whiteToMove != piece.white:
+            return
+        self.selected_piece = piece
         self.resetHighlights()
         moves = piece.showMoves()
-        print(moves)
         self.highlightMoves(moves, piece)
 
     def onSquareClick(self, event):
@@ -39,15 +42,19 @@ class ChessBoard(wx.Frame):
             x, y = square.position
             if square.selectedBy:
                 self.selected_piece.move((x, 7 - y))
+                self.board.whiteToMove = not self.board.whiteToMove 
                 self.refreshBoard()
                 self.resetHighlights()
                 self.selected_piece = None
+            else:
+                self.resetHighlights()
 
     def resetHighlights(self):
         for square in self.highlighted_squares:
             square.SetBackgroundColour(square.original_color)
             square.selectedBy = None
         self.highlighted_squares = []
+        self.Refresh()
 
     def highlightMoves(self, moves, piece):
         for move in moves:
@@ -65,7 +72,7 @@ class ChessBoard(wx.Frame):
                 square.DestroyChildren()
         
         # Place pieces on their new locations
-        for piece in self.board:
+        for piece in self.board.board:
             if piece.location:
                 x, y = piece.location
                 square = self.squares[7 - y][x]

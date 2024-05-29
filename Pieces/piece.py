@@ -8,7 +8,7 @@ class Piece:
         self.square = None
 
     def die(self):
-        self.board.remove_piece(self)
+        self.boardObject.remove_piece(self)
         self.alive = False
 
     def move(self, location):
